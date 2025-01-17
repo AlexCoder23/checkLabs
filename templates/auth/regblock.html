@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <style>
+      body {
+        display: flex;
+        flex-direction: column;
+      }
+      .main-article__header {
+        text-align: center;
+        text-transform: uppercase;
+        padding-top: 40px;
+        font-size: calc(var(--index) / 1.2);
+        letter-spacing: calc(var(--index) / 20);
+        margin-top: calc(var(--index) * .4);
+      }
+      p {
+        font-size: calc(var(--index) / 1.3);
+        letter-spacing: calc(var(--index) / 50);
+        margin-top: 0;
+      }
+      h1 {
+        font-size: calc(var(--index) / 1);
+        letter-spacing: calc(var(--index) / 40);
+        margin-top: 0;
+      }
+      a {
+        font-size: calc(var(--index) / 1.5);
+        letter-spacing: calc(var(--index) / 50);
+        margin-bottom: calc(var(--index) * 0);
+        color: var(--text);
+      }
+      a:visited {
+        color: var(--text1);
+      }
+      .main-article__paragraph {
+        text-align: center;
+      }
+      .formdiv {
+        flex-grow: 1;
+        padding: 40px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+      }
+      .reg-void {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 50%;
+        height: 100%;
+      }
+      @keyframes onhover {
+        from {
+          box-shadow: 5px 5px 7px #9d822b;
+          border-radius: 20px;
+        }
+        to {
+          box-shadow: 7px 7px 5px #9d822b;
+          border-radius: 10px;
+        }
+      }
+      @keyframes offhover {
+        from {
+          box-shadow: 7px 7px 5px #9d822b;
+          border-radius: 10px;
+        }
+        to {
+          box-shadow: 5px 5px 7px #9d822b;
+          border-radius: 20px;
+        }
+      }
+      .registration {
+        animation: .4s offhover;
+        text-align: center;
+        border: calc(var(--index) * 0.18) solid white;
+        border-radius: 20px;
+        background-color: rgb(147 0 255 / 10%);
+        box-shadow: 5px 5px 7px #9d822b;
+        width: 100%;
+        max-width: 500px;
+        padding: 40px;
+      }
+      .registration:hover {
+        animation: onhover .4s;
+        border-radius: 10px;
+        box-shadow: 7px 7px 5px #9d822b;
+      }
+      @media (max-width: 650px) {
+        .formdiv {
+          width: 70%;
+          padding-top: 40px;
+        }
+        .reg-void {
+          display: none;
+        }
+      }
+      .beatfield {
+        text-align: center;
+        height: 30px;
+        border: 1px solid white;
+        border-radius: 10px;
+        background-color: rgb(147 0 255 / 10%);
+        color: white;
+        font-family: 'Roboto', sans-serif;
+        font-size: calc(var(--index) / 1.3);
+        height: calc(var(--index) / 0.8);
+        letter-spacing: calc(var(--index) / 70);
+        margin-top: calc(var(--index) * .1);
+      }
+      form input[type="submit"]{
+        margin: 6px;
+        width: 50%;
+        height: 30px;
+        border: 1px solid white;
+        border-radius: 20px;
+        background-color: rgb(147 0 255 / 10%);
+        color: white;
+        font-size: calc(var(--index) / 1.3);
+        height: calc(var(--index) / 0.8);
+        letter-spacing: calc(var(--index) / 70);
+        font-family: 'Roboto', sans-serif;
+        margin-top: calc(var(--index) * .1);
+      }
+      </style>
+    </head>
+  <body>
+    <h2 class="main-article__header header">Регистрация и вход</h2>
+    <div style="display: flex; justify-content: space-around; align-items: center; width: 100%; flex-grow: 1;">
+      <div class="reg-void">
+        <img src="/static/imgs/best_img.jpg" style="width: 70%;">
+      </div>
+      <div class="main-article__paragraph formdiv">
+        <div class="registration">
+          <h3 class="main-article__header" style="padding-top: 0; margin-bottom: 6px;">вход</h3>
+          <script>
+            function onTelegramAuth(user) {
+              $.ajax({
+                url: '/auth/telegram',
+                method: 'post',
+                headers: {
+                  "Content-Type": "application/json"
+                },
+                data: JSON.stringify(user),
+                success: function(data) {
+    //               if(data.ok) location.reload();
+                }
+              })
+            }
+          </script>
+          <script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-login="alexsWorkBot" data-size="medium" data-userpic="false" data-onauth="onTelegramAuth(user)" data-request-access="write"></script>
+          <form name="inform">
+            <div style="display: flex; padding: 0; align-items: center;"><hr style="width: 30%;">или<hr style="width: 30%; height: 1px;"></div>
+            <p id="tt-login" class="relt">Введите своё имя пользователя или id телеграмм</p>
+            <input id="it-login" type="tag" name='tag' placeholder='username/00000000000' class="beatfield">
+            <p id="tp-login" class="relt">Введите привязанный пароль аккаунта</p>
+            <input id="ip-login" type="password" name='password' placeholder='********' class="beatfield">
+            <input id="bs-login" type="submit" value="Войти" style="margin-top: 6px;">
+          </form>
+          <script>
+            $("#bs-login").click((e) => {
+              e.preventDefault();
+              $.ajax({
+                url: '/auth/login',
+                method: 'post',
+                headers: {
+                  "Content-Type": "application/json"
+                },
+                data: JSON.stringify({
+                  username: $("#it-login").val(),
+                  passwd: $("#ip-login").val(),
+                }),
+                success: function(data) {
+                  if(data.ok) location.reload();
+                  else {
+                    alert('wrong password or tag');
+                  }
+                }
+              })
+            })
+          </script>
+        </div>
+      </div>
+</div>

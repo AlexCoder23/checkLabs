@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Страница CheckLabs для учителя, главная страница учителя"/>
+    <meta name="doc_name" content="Учитель CheckLabs главная">
+    <meta name="topic_name" content="CheckLabs - Учитель">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    
+    <title>CheckLabs - Учитель</title>
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      .text-field__label {
+        display: block;
+        margin-bottom: 0.17rem;
+      }
+
+      .text-field__input {
+        display: block;
+        max-width: 300px;
+        height: calc(1.5rem + 2px);
+        padding: 0.375rem 0.75rem;
+        font-family: inherit;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1;
+        color: #212529;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #bdbdbd;
+        border-radius: 0.17rem;
+        transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+      }
+
+      .text-field__input::placeholder {
+        color: #212529;
+        opacity: 0.4;
+      }
+
+      .text-field__input:focus {
+        color: #212529;
+        background-color: #fff;
+        border-color: #bdbdbd;
+        outline: 0;
+        box-shadow: 0 0 0 0.2rem rgba(158, 158, 158, 0.25);
+      }
+
+      .text-field__input:disabled,
+      .text-field__input[readonly] {
+        background-color: #f5f5f5;
+        opacity: 1;
+      }
+
+      /* with floating label */
+      .text-field_floating {
+        position: relative;
+      }
+
+      .text-field_floating .text-field__input {
+        height: calc(3rem + 2px);
+        line-height: 1;
+        padding: 1rem 0.75rem;
+      }
+
+      .text-field_floating .text-field__label {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        padding: 1rem .75rem;
+        pointer-events: none;
+        border: 1px solid transparent;
+        transform-origin: 0 0;
+        transition: opacity .15s ease-in-out, transform .15s ease-in-out;
+      }
+
+      .text-field_floating .text-field__input::-moz-placeholder {
+        color: transparent;
+      }
+
+      .text-field_floating .text-field__input::placeholder {
+        color: transparent;
+      }
+
+      .text-field_floating .text-field__input:focus,
+      .text-field_floating .text-field__input:not(:placeholder-shown) {
+        padding-top: 1.625rem;
+        padding-bottom: .625rem;
+      }
+
+      .text-field_floating .text-field__input:focus~.text-field__label,
+      .text-field_floating .text-field__input:not(:placeholder-shown)~.text-field__label {
+        opacity: .65;
+        transform: scale(.8) translateY(-.7rem) translateX(.1rem);
+      }
+      
+
+      body {
+        width: 100vw;
+        height: 100vh;
+      }
+
+      header {
+        position: fixed;
+        z-index: 100;
+        width: 100%;
+        height: 50px;
+        display: flex;
+        justify-content: space-between;
+        padding: 4px;
+      }
+
+      header > div {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      
+      header > div > * {
+        margin: 0 6px;
+      }
+
+      header a {
+        height: 90%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: rgb(6 133 98);
+        text-decoration: none;
+      }
+      header a:hover {
+        color: rgb(20 147 112);
+      }
+
+      header p {
+        margin: 0;
+      }
+
+      header img {
+        height: 90%;
+        border-radius: 50%;
+      }
+      
+      .ava-img-div {
+        aspect-ratio: 1/1;
+        height: 34px;
+        width: 34px;
+      }
+      
+      .ava-img-div > * {
+        position: absolute;
+        height: 34px;
+        width: 34px;
+      }
+      
+      #ava-ini {
+        display: flex; 
+        justify-content: center; 
+        align-items: center; 
+        color: white;
+        font-size: 0.84rem;
+        background-color: #2f3f4f;
+        border: 1px solid white;
+        border-radius: 50%;
+      }
+
+      main {
+        padding-top: 50px;
+        width: 100%;
+        min-height: 100%;
+      }
+      
+      main > div {
+        max-width: 1080px;
+        min-width: 0px;
+        margin-left: auto;
+        margin-right: auto;
+        padding: 32px;
+      }
+      
+      #teach-form > p {
+        margin-bottom: 8px;
+      }
+      
+      #teach-form input[type="button"] {
+        padding: 6px 20px;
+      }
+      
+      .in-row {
+        display: flex;
+        column-gap: 10px;
+      }
+      
+      #clases {
+        display: flex;
+        flex-direction: column;
+        margin-top: 8px;
+      }
+      
+      .classd {
+        margin-bottom: 5px;
+        padding: 6px;
+        width: 100%;
+        border-radius: 8px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        cursor: pointer;
+      }
+      .classd:hover {
+        background-color: rgba(6 133 98 / 12%);
+      }
+      
+      .classd > div:first-child {
+        flex-grow: 1;
+      }
+      
+      .classd > div:last-child {
+        display: flex;
+      }
+      
+      .classd > div > p {
+        margin: 0;
+      }
+      
+      .classd > div > i {
+        font-size: 0.8rem;
+        margin: 0;
+      }
+      
+      .classd > div > svg {
+        height: 2rem;
+        width: 2rem;
+        margin-left: 4px;
+        padding: 6px;
+        border-radius: 6px;
+      }
+      
+      .classd > div > svg:hover {
+        background-color: rgba(6 133 98 / 12%);
+      }
+      
+      #new-class-name {
+        flex-grow: 5;
+      }
+      
+      #create-class-btn {
+        flex-grow: 2;
+      }
+      
+      #new-class-description {
+        margin-top: 10px;
+        width: 100%;
+        height: 170px;
+      }
+      
+      #reg-form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      #reg-form > form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      #reg-form > form > p {
+        margin-bottom: 0;
+        margin-top: 6px;
+      }
+      #reg-form > form > input[type=submit] {
+        width: 202px;
+        height: 28px;
+        border: none;
+        border-radius: 12px;
+        background-color: rgb(6, 133, 98);
+        color: white;
+      }
+      
+/*       @media  */
+    </style>
+  </head>
+  <body>
+    <div class="modal fade" id="create-class-modal" tabindex="-1" aria-labelledby="create-class" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Создать класс</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+          </div>
+          <div class="modal-body" id="new-class-form">
+            <div class="in-row">
+              <input type="name" maxlength=64 placeholder="Имя класса" id="new-class-name"><br/>
+              <button id="create-class-btn">Создать</button>
+            </div>
+            <textarea maxlength=256 placeholder="Описание" id="new-class-description"></textarea><br/>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="modal fade" id="reg-modal" tabindex="-1" aria-labelledby="create-class" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Вход и регистрация</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+          </div>
+          <div class="modal-body" id="reg-form">
+            <script>
+              function onTelegramAuth(user) {
+                $.ajax({
+                  url: '/auth/telegram',
+                  method: 'post',
+                  headers: {
+                    "Content-Type": "application/json"
+                  },
+                  data: JSON.stringify(user),
+                  success: function(data) {
+                    if(data.ok) location.reload();
+                  }
+                })
+              }
+            </script>
+            <script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-login="alexsWorkBot" data-size="medium" data-userpic="false" data-onauth="onTelegramAuth(user)" data-request-access="write"></script>
+            <form name="inform">
+              <div style="display: flex; padding: 0; align-items: center; width: 96%; justify-content: center;"><hr style="width: 30%;">или<hr style="width: 30%; height: 1px;"></div>
+              <p id="tt-login" class="relt">Введите своё имя пользователя или id телеграмм</p>
+              <input id="it-login" type="tag" name='tag' placeholder='username/00000000000' class="beatfield">
+              <p id="tp-login" class="relt">Введите привязанный пароль аккаунта</p>
+              <input id="ip-login" type="password" name='password' placeholder='********' class="beatfield">
+              <input id="bs-login" type="submit" value="Войти" style="margin-top: 6px;">
+            </form>
+            <script>
+              $("#bs-login").click((e) => {
+                e.preventDefault();
+                $.ajax({
+                  url: '/auth/login',
+                  method: 'post',
+                  headers: {
+                    "Content-Type": "application/json"
+                  },
+                  data: JSON.stringify({
+                    username: $("#it-login").val(),
+                    passwd: $("#ip-login").val(),
+                  }),
+                  success: function(data) {
+                    if(data.ok) location.reload();
+                    else {
+                      alert('wrong password or tag');
+                    }
+                  }
+                })
+              })
+            </script>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <header>
+      <div>
+        <a href="/checkLabs">
+          <img src="/static/checkLabs-ico.jpg" style="margin-right: 6px; border-radius: 0px;">
+          <p>CheckLabs</p>
+        </a>
+      </div>
+      <div>
+        <a id="acc-btn">
+          <div class="ava-img-div">
+            <span id="ava-ini"></span>
+            <img id="avatar">
+          </div>
+          <svg preserveAspectRatio="xMidYMin" width="12" height="12" viewBox="0 0 24 24" fill="var(--foreground-dimmest)" aria-hidden="true" class="css-492dz9" style="--size: 12px; --rotate: 0deg; width: 12px; height: 12px;"><path fill-rule="evenodd" d="M12.53 15.53a.75.75 0 0 1-1.06 0l-6-6a.75.75 0 0 1 1.06-1.06L12 13.94l5.47-5.47a.75.75 0 1 1 1.06 1.06l-6 6Z" clip-rule="evenodd"></path></svg>
+        </a>
+      </div>
+    </header>
+    <main>
+      <hr style="width: 100%; margin: 0px;"/>
+      <div id="teach-form">
+        <p>Имя и фамилия, которые видят ваши ученики</p>
+        <div class="in-row">
+          <div class="text-field text-field_floating">
+            <input class="text-field__input" type="name" id="inp-lastname" placeholder="Фамилия">
+            <label class="text-field__label" for="inp-lastname">Фамилия</label>
+          </div>
+          <div class="text-field text-field_floating">
+            <input class="text-field__input" type="name" id="inp-firstname" placeholder="Имя">
+            <label class="text-field__label" for="inp-firstname">Имя</label>
+          </div>
+          <div class="text-field text-field_floating">
+            <input class="text-field__input" type="name" id="inp-otch" placeholder="Имя">
+            <label class="text-field__label" for="inp-otch">Отчество</label>
+          </div>
+          <input type="button" value="Сохранить" id="inp-save">
+        </div>
+      </div>
+      
+      <div id="teach-form">
+        <p>Ваши классы</p>
+        <input type="button" value="Создать класс" data-bs-toggle="modal" data-bs-target="#create-class-modal">
+        <div id="clases">
+          
+        </div>
+      </div>
+    </main>
+  </body>
+  
+  <script>
+    $.ajax({
+      url: '/auth/logined',
+      method: 'get',
+      success: function(data) {
+        if(data.ok && data.user) {
+          $.ajax({
+            url: '/checkLabs/get-teacher',
+            method: 'get',
+            success: function(data1) {
+              if(data1.ok && data1.teacher) {
+                if(data.user[4]) {
+                  $("#avatar").attr('src', data.user[4]);
+                } else {
+                  $("#avatar").remove();
+                  $("#ava-ini").text(data1.teacher.firstname[0].toUpperCase()+(data1.teacher.lastname ? data1.teacher.lastname[0].toUpperCase() : ''));
+                }
+                const clases = $("#clases");
+                function addClass(class_data) {
+                  const class_elem = $(document.createElement('div')).addClass('classd');
+                  const class_div = $(document.createElement('div'));
+                  const nameb = $(document.createElement('p'));
+                  nameb.text(class_data.name);
+                  class_div.append(nameb);
+                  const descriptionb = $(document.createElement('i'));
+                  descriptionb.text(class_data.description);
+                  class_div.append(descriptionb);
+                  class_div.click((e) => {
+                    location.href = `/checkLabs/class/${class_data.id}`;
+                  })
+                  class_elem.append(class_div);
+                  const class_div1 = $(document.createElement('div'));
+                  const class_svg = $(`<svg width="100" height="100" viewBox="0 0 64 64">
+<path d="M 48.097656 3.453125 C 47.0625 3.453125 46.027344 3.828125 45.269531 4.585938 L 41.03125 8.828125 C 40.25 8.046875 38.980469 8.046875 38.203125 8.828125 L 32.546875 14.484375 C 32.167969 14.863281 31.957031 15.367188 31.957031 15.902344 C 31.957031 16.433594 32.167969 16.9375 32.546875 17.3125 L 32.59375 17.363281 L 5.515625 44.398438 C 5.011719 44.902344 4.707031 45.570313 4.648438 46.28125 L 3.972656 54.675781 L 3.269531 59.597656 C 3.222656 59.910156 3.328125 60.222656 3.554688 60.449219 C 3.742188 60.636719 3.996094 60.738281 4.257813 60.738281 C 4.308594 60.738281 4.355469 60.738281 4.402344 60.730469 L 9.320313 60.03125 L 17.765625 59.40625 C 18.484375 59.355469 19.15625 59.046875 19.664063 58.539063 L 46.742188 31.5 C 47.113281 31.847656 47.589844 32.042969 48.101563 32.042969 C 48.636719 32.042969 49.136719 31.835938 49.515625 31.457031 L 55.171875 25.800781 C 55.953125 25.019531 55.953125 23.753906 55.171875 22.972656 L 59.417969 18.730469 C 60.171875 17.972656 60.585938 16.96875 60.585938 15.898438 C 60.585938 14.832031 60.171875 13.824219 59.414063 13.070313 L 50.929688 4.585938 C 50.175781 3.828125 49.136719 3.453125 48.097656 3.453125 Z M 48.097656 5.433594 C 48.617188 5.433594 49.136719 5.621094 49.515625 6 L 58 14.484375 C 58.378906 14.863281 58.585938 15.363281 58.585938 15.898438 C 58.585938 16.433594 58.378906 16.9375 58 17.3125 L 53.757813 21.558594 L 42.441406 10.242188 L 46.6875 6 C 47.0625 5.621094 47.582031 5.433594 48.097656 5.433594 Z M 39.613281 10.242188 L 40.324219 10.949219 L 53.050781 23.675781 L 53.757813 24.386719 L 52.34375 25.796875 C 51.953125 25.40625 51.320313 25.40625 50.929688 25.796875 L 49.515625 27.214844 C 49.125 27.605469 49.125 28.238281 49.515625 28.628906 L 48.101563 30.042969 L 33.957031 15.898438 L 35.371094 14.484375 C 35.566406 14.679688 35.820313 14.777344 36.078125 14.777344 C 36.335938 14.777344 36.589844 14.679688 36.785156 14.484375 L 38.203125 13.070313 C 38.59375 12.679688 38.59375 12.046875 38.203125 11.65625 Z M 41.03125 14.898438 C 40.773438 14.898438 40.519531 14.996094 40.324219 15.191406 L 38.90625 16.605469 C 38.515625 16.996094 38.515625 17.628906 38.90625 18.019531 C 39.101563 18.214844 39.359375 18.3125 39.613281 18.3125 C 39.871094 18.3125 40.128906 18.214844 40.324219 18.019531 L 41.734375 16.605469 C 42.128906 16.214844 42.128906 15.582031 41.734375 15.191406 C 41.539063 14.996094 41.285156 14.898438 41.03125 14.898438 Z M 44.5625 18.4375 C 44.308594 18.4375 44.054688 18.53125 43.859375 18.730469 L 42.441406 20.140625 C 42.050781 20.535156 42.050781 21.164063 42.441406 21.558594 C 42.636719 21.75 42.894531 21.847656 43.152344 21.847656 C 43.40625 21.847656 43.664063 21.75 43.859375 21.558594 L 45.269531 20.140625 C 45.664063 19.75 45.664063 19.121094 45.269531 18.730469 C 45.074219 18.53125 44.820313 18.4375 44.5625 18.4375 Z M 34.011719 18.777344 L 45.324219 30.09375 L 19.027344 56.347656 L 18.074219 51.582031 L 34.664063 34.992188 C 35.054688 34.601563 35.054688 33.96875 34.664063 33.578125 C 34.273438 33.1875 33.644531 33.1875 33.25 33.578125 L 16.65625 50.171875 L 14.300781 49.699219 L 13.828125 47.339844 L 27.59375 33.578125 C 27.988281 33.183594 27.988281 32.554688 27.59375 32.160156 C 27.203125 31.769531 26.574219 31.769531 26.183594 32.160156 L 12.417969 45.925781 L 7.753906 44.996094 Z M 48.101563 21.96875 C 47.84375 21.96875 47.589844 22.066406 47.394531 22.265625 L 45.980469 23.675781 C 45.589844 24.070313 45.589844 24.699219 45.980469 25.09375 C 46.175781 25.285156 46.429688 25.386719 46.6875 25.386719 C 46.945313 25.386719 47.199219 25.285156 47.394531 25.09375 L 48.808594 23.675781 C 49.199219 23.285156 49.199219 22.65625 48.808594 22.265625 C 48.613281 22.066406 48.359375 21.96875 48.101563 21.96875 Z M 32.546875 26.214844 C 32.289063 26.214844 32.035156 26.3125 31.839844 26.503906 L 29.011719 29.332031 C 28.617188 29.726563 28.617188 30.355469 29.011719 30.75 C 29.203125 30.941406 29.460938 31.042969 29.71875 31.042969 C 29.972656 31.042969 30.230469 30.941406 30.421875 30.75 L 33.25 27.921875 C 33.644531 27.527344 33.644531 26.898438 33.25 26.503906 C 33.054688 26.308594 32.800781 26.210938 32.546875 26.214844 Z M 6.609375 46.804688 L 11.894531 47.859375 L 12.46875 50.746094 C 12.550781 51.140625 12.859375 51.449219 13.253906 51.527344 L 16.136719 52.105469 L 17.203125 57.441406 L 9.59375 58 L 6 54.410156 Z"></path></svg>`)
+                  class_div1.append(class_svg);
+                  const class_svg1 = $(`<svg width="100" height="100" viewBox="0 0 16 16"><path fill="currentColor" fill-rule="evenodd" d="m1.982 5.073l1.025 10.266c0 .366.307.661.684.661h7.58a.673.673 0 0 0 .684-.661L12.98 5.073H1.982zm6.051 8.995H6.961V6.989h1.072v7.079zm2 0H8.961l1-7.079h1.072l-1 7.079zm-4 0H4.961l-1-7.079h1.072l1 7.079zm7.042-11.963H9.937V.709C9.937.317 9.481 0 9.081 0H5.986c-.4 0-.955.225-.955.615v1.396l-3.145.094a.717.717 0 0 0-.727.708v1.155H13.8V2.813a.715.715 0 0 0-.725-.708zM5.947 1.44c0-.312.351-.565.783-.565h1.564c.432 0 .782.254.782.565v.665h-3.13V1.44h.001z"/></svg>`);
+                  class_svg1.click((e) => {
+                    console.log(class_data.id)
+                    $.ajax({
+                      url: '/checkLabs/delete-class',
+                      method: 'delete',
+                      headers: {
+                        "Content-Type": "application/json"
+                      },
+                      data: JSON.stringify({
+                        id: class_data.id
+                      }),
+                      success: function(class_data) {
+                        class_elem.remove()
+                      }
+                    })
+                  })
+                  class_div1.append(class_svg1);
+                  class_elem.append(class_div1);
+                  clases.append(class_elem);
+                }
+                $.ajax({
+                  url: '/checkLabs/get-classes',
+                  method: 'post',
+                  headers: {
+                    "Content-Type": "application/json"
+                  },
+                  data: JSON.stringify({
+                    id: data1.teacher.clases
+                  }),
+                  success: function(class_data) {
+                    if(class_data.ok) {
+                      for(let i = 0; i < class_data.classes.length; i++) {
+                        addClass(class_data.classes[i]);
+                      }
+                    } else {
+                      
+                    }
+                  }
+                });
+                $("#inp-firstname").val(data1.teacher.firstname);
+                $("#inp-lastname").val(data1.teacher.lastname);
+                $("#inp-otch").val(data1.teacher.otch);
+                $("#inp-save").click((e) => {
+                  $.ajax({
+                    url: '/checkLabs/edit-teacher',
+                    method: 'post',
+                    headers: {
+                      "Content-Type": "application/json"
+                    },
+                    data: JSON.stringify({
+                      firstname: $("#inp-firstname").val(),
+                      lastname: $("#inp-lastname").val(),
+                      otch: $("#inp-otch").val(),
+                    }),
+                    success: function(data) {
+                      console.log("Great")
+                    }
+                  });
+                });
+                $("#new-class-name").on('keydown', (e) => {
+                  if(e.keyCode == 13) {
+                    e.preventDefault();
+                    $("#new-class-description").focus();
+                  }
+                })
+                $("#create-class-btn").click((e) => {
+                  let name = $("#new-class-name").val();
+                  let description = $("#new-class-description").val();
+                  $.ajax({
+                    url: '/checkLabs/create-class',
+                    method: 'post',
+                    headers: {
+                      "Content-Type": "application/json"
+                    },
+                    data: JSON.stringify({
+                      name: name,
+                      description: description,
+                    }),
+                    success: function(data) {
+                      if(data.ok) {
+                        $("#create-class-modal").modal('hide');
+                        $.ajax({
+                          url: '/checkLabs/get-class',
+                          method: 'post',
+                          headers: {
+                            "Content-Type": "application/json"
+                          },
+                          data: JSON.stringify({
+                            id: data.class_id
+                          }),
+                          success: function(class_data) {
+                            addClass(class_data.class);
+                          }
+                        });
+                      }
+                    }
+                  });
+                });
+              } else {
+                
+              }
+            }
+          })
+        } else {
+          if(data.ok) {
+            $("#reg-modal").modal('show');
+            $("#reg-modal").on('hidden.bs.modal', (e) => {
+              $("#reg-modal").modal('show');
+            })
+          }
+        }
+      }
+    })
+  </script>
+</html>

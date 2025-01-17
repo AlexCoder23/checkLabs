@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>Profile</title>
+    
+    <style>
+      *, *::before, *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      
+      body {
+        background-color: #130821;
+        color: white;
+        height: 100vh;
+        width: 100vw;
+      }
+      
+      header {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #avatar {
+        height: 18vh;
+        width: 18vh;
+        margin: 8px;
+        border-radius: 9999px;
+        -webkit-touch-callout: none;
+        -webkit-user-select: none;
+        -khtml-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        pointer-events: none;
+      }
+      
+      #nick {
+        font-weight: 400;
+        font-size: 20px;
+      }
+
+      main {
+        list-style: none;
+      }
+      
+      .field {
+        border: 1px solid white;
+        border-radius: 6px;
+        background-color: rgb(147 0 255 / 10%);
+        padding: 5px;
+        color: white;
+      }
+      
+      .string {
+        width: calc(100% - 20px);
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        justify-content: space-between;
+        margin: 10px;
+      }
+      
+      .b-button {
+        background: #232323;
+        border-radius: 8px;
+        background-color: rgb(147 0 255 / 10%);
+        padding: 5px;
+        border: 1px solid white;
+        color: white;
+        flex-grow: 1;
+      }
+      .b-button:hover {
+        background-color: rgb(147 0 255 / 30%);
+      }
+      
+      .d-button {
+        background: #302323;
+        border-radius: 8px;
+        background-color: rgb(255 0 129 / 30%);
+        padding: 5px;
+        border: 1px solid white;
+        color: white;
+        font-weight: 700;
+        flex-grow: 1;
+      }
+      .d-button:hover {
+        background-color: rgb(255 0 129 / 50%);
+      }
+      
+      #messages {
+        position: absolute;
+        top: 0;
+        width: 100%;
+        padding: 6px;
+      }
+      #messages > div {
+        border-radius: 6px;
+        border: 2px solid white;
+        background-color: rgba(0 0 0 / 40%);
+        margin-bottom: 6px;
+        padding: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <img id="avatar">
+      <p id="nick"></p>
+    </header>
+    <main>
+      <div class="string">
+        <input class="field" id="chpassi" type="text" placeholder="Enter password">
+        <button class="b-button" id="chpassb">Change</button>
+      </div>
+      <div class="string">
+        <button id="logout" class="b-button">logout</button>
+        <button class="d-button">Delete account</button>
+      </div>
+    </main>
+    <div id="messages"></div>
+  </body>
+  <script>
+    var messages = $("#messages");
+    function msg(text) {
+      let mess = $(document.createElement('div'));
+      mess.text(text);
+      messages.append(mess);
+      setTimeout(() => {
+        mess.fadeOut(300);
+      }, 4000)
+    }
+    
+    $("#logout").css("display", "none");
+    $.ajax({
+      url: '/auth/logined',
+      method: 'get',
+      success: function(data) {
+        if(data.user) {
+          $("#nick").text(data.user[2]);
+          $("#avatar").attr('src', data.user[4]);
+        } else {
+          $("#nick").text('None');
+          $("#avatar").attr('src', '/static/shakal.jpg');
+        }
+      }
+    });
+
+    $("#chpassb").click(() => {
+      $.ajax({
+        url: '/auth/password',
+        method: 'post',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        data: JSON.stringify({passwd: $("#chpassi").val()}),
+        success: function(data) {
+          if(data.ok) {
+            msg("Password changed");
+          } else {
+            msg(data.message);
+          }
+        }
+      });
+    });
+  </script>
+</html>

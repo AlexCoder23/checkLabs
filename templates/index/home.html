@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Главная страница сайта AlexCoder23, описание сайта, цели, отправная точка"/>
+    <meta name="doc_name" content="Домашняя страница">
+    <meta name="topic_name" content="Добро пожаловать на остров AlexCoder23">
+    
+    <title>Добро пожаловать на остров AlexCoder23</title>
+    <link rel="stylesheet" href="/static/mysite/home.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="icon" href="https://alexcoder23.ru/favicon.ico" type="image/x-icon">
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <script src="/static/gsap.js" defer></script>
+    <script src="/static/ScrollTrigger.js" defer></script>
+    <script src="/static/ScrollSmoother.js" defer></script>
+    
+    <script src="/static/mysite/home.js" defer></script>
+    <script src="/static/cookie.js"></script>
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="content">
+        <header class="main-header ground">
+          <div class="layers">
+            <div class="layer__titdiv">
+              <div class="layers__caption">Welcome to AlexCoder23's island</div>
+              <div class="layers__title">Home page</div>
+            </div>
+            <div class="layer layers__base" style="background-image: url(/static/mysite/layer-base1.3.jpg);"></div>
+            <div class="layer layers__middle" style="background-image: url(/static/mysite/layer-middle1.3.png);"></div>
+            <div class="layer layers__front" style="background-image: url(/static/mysite/layer-front1.2.png);"></div>
+            <h1 style="width: 100%; position: absolute; z-index: 4; font-size: 90px; color: var(--text); top: 75%; font-size: calc(var(--index) * 4.6); letter-spacing: calc(var(--index) / 40); margin-top: 0;" id="nytimer"></h1>
+          </div>
+<!--           <div class="nylights" style="position: fixed; top:  -10px; left:  0px; background-image: url(/static/nylights2.gif); width:  100vw; height: 40px; background-size: contain; z-index: 4;"></div>
+          <div class="nylights" style="position: fixed; top:  0px; left: -10px; background-image: url(/static/nylights2r.gif); width: 40px; height: 100vh; background-size: contain; z-index: 4;"></div>
+          <div class="nylights" style="position: absolute; bottom: -20px; left:  0px; background-image: url(/static/nylights2.gif); width: 100vw; height: 40px; background-size: contain; z-index: 4;"></div>
+          <div class="nylights" style="position: fixed; top:  0px; right: -10px; background-image: url(/static/nylights2r.gif); width: 40px; height: 100vh; background-size: contain; z-index: 4;"></div> -->
+        </header>
+        
+        <main>
+          <article class="main-article">
+            <h2 class="main-article__header header" style="margin-top: 40px;">Мы приветствуем Вас</h2>
+            <div class="maxw">
+              <p>Здравствуйте<span id="gree-nick"></span>! Здесь вы найдёте дружелюбное сообщество, множество идейных предложений, сможете заказать изготовление любых ботов и сайтов. Наш слоган: безопасность, надёжность, скорость. Мой телеграм: <a href="https://t.me/alexCoder23">@alexСoder23</a> и <a href="/bio">биография</a>. С уважением, AlexCoder23.</p>
+            </div>
+            <h2 class="main-article__header header">Наши услуги</h2>
+            <div class="services">
+              <div class="services-line">
+                <div class="service">
+                  <h3 class="main-article__header">Открытая сеть ботов</h3>
+                  <p>Наша сеть ботов поможет вам наладить коммуникации между вашими устройствами без риска взлома.</p>
+                  <a href="/services?type=bot-net" style="color: rgb(157 157 157 / 61%);">Подробнее...</a>
+                </div>
+                <div class="service">
+                  <h3 class="main-article__header">Хранение вашего json файла</h3>
+                  <p>Вы можете сохранить свой JSON-файл здесь, обновлять его и получать из него информацию в любое время.</p>
+                  <a href="/services?type=json" style="color: rgb(157 157 157 / 61%);">Подробнее...</a>
+                </div>
+              </div>
+              <div class="services-line">
+                <div class="service">
+                  <h3 class="main-article__header">Изготовление сайтов и ботов, а так же их хостинг</h3>
+                  <p>Вы можете заказать изготовление сайта или бота, а также его хостинг.</p>
+                  <a href="https://t.me/alexCoder23" style="color: rgb(157 157 157 / 61%);">Заказать...</a>
+                </div>
+                <div class="service">
+                  <h3 class="main-article__header">Заказать рекламу</h3>
+                  <p>Если вам нужна реклама вашего продукта или компании, можете заказать её здесь.</p>
+                  <a href="https://t.me/alexCoder23" style="color: rgb(157 157 157 / 61%);">Заказать за 0р в месяц...</a>
+                </div>
+              </div>
+            </div>
+          </article>
+          <article class="main-article" id="regblock">
+          </article>
+          <article class="main-article">
+            <h2 class="main-article__header header">Новости и Проекты</h2>
+            <div class="newsdiv">
+              <div class="new">
+                <h1>new.title</h1>
+                new.body|safe
+              </div>
+            </div>
+          </article>
+          <footer>
+            <table>
+              <tr>
+                <td><p>Мой телеграм: <a href="https://t.me/alexCoder23">@alexcoder23</a></p></td>
+                <td><p>Моя почта: <a href="/cdn-cgi/l/email-protection#650409000e16001c070009010008250208040c094b060a08"><span class="__cf_email__" data-cfemail="3c5d5059574f59455e59505859517c5b515d5550125f5351">[email&#160;protected]</span></a></p></td>
+              </tr>
+              <tr>
+                <td><p>Спонсированно: <a href="https://codemirror.net">#CodeMirror</a> <a href="https://cloudflare.com">#Cloudflare</a></p></td>
+                <td><p></p></td>
+              </tr>
+            </table>
+          </footer>
+        </main>
+      </div>
+    </div>
+    <div class="acc">
+    </div>
+    <div class="acc-actions">
+      <button class="acc-settings">Profile</button>
+      <button class="acc-logout">log out</button>
+    </div>
+    
+    <script>
+      const deadline = new Date(2025, 05, 15, 12);
+      let disp = $("#nytimer");
+      function countdownTimer() {
+        const diff = deadline - new Date();
+        if (diff <= 0) {
+          clearInterval(timerId);
+          disp.text("???");
+          return;
+        }
+        const days = diff > 0 ? Math.floor(diff / 1000 / 60 / 60 / 24) : 0;
+        const hours = diff > 0 ? Math.floor(diff / 1000 / 60 / 60) % 24 : 0;
+        const minutes = diff > 0 ? Math.floor(diff / 1000 / 60) % 60 : 0;
+        const seconds = diff > 0 ? Math.floor(diff / 1000) % 60 : 0;
+        disp.text((days < 10 ? '0' + days : days) + ":" + (hours < 10 ? '0' + hours : hours) + ":" + (minutes < 10 ? '0' + minutes : minutes) + ":" + (seconds < 10 ? '0' + seconds : seconds));
+      }
+      
+      timerId = setInterval(countdownTimer, 1000);
+    
+      const avtor = document.querySelector('#gb1');
+      
+      function logout() {
+        $.ajax({
+          url: '/auth/logout',
+          method: 'get',
+          success: function(data) {
+            location.reload();
+          }
+        })
+      }
+      
+      $.ajax({
+        url: '/auth/logined',
+        method: 'get',
+        success: function(data) {
+          
+          if(data.ok && data.user) {
+            const avatar = document.createElement('img');
+            avatar.src = data.user[4];
+            $("#gree-nick").text(' '+data.user[2]);
+            $(".acc").append(avatar).on("mousedown touchstart", (e) => {
+              $(".acc-actions").addClass('acc-actions-show');
+            }).on("mouseup touchend", (e) => {
+              e.stopPropagation();
+            });
+            
+            $("#regblock").remove();
+            
+            let profile = {
+              opened: false,
+              clicked: false,
+              rpos: [0, 0],
+            }
+            
+            $(".acc-logout").click(() => {
+              logout();
+            });
+            
+            $(".acc-settings").click(() => {
+              profile.div = document.createElement('div');
+              
+              profile.header = document.createElement('div');
+              profile.div.append(profile.header);
+              profile.header.classList.add("web-header");
+              profile.header.innerHTML = '<p>Profile</p>';
+              
+              profile.iframe = document.createElement('iframe');
+              profile.div.append(profile.iframe);
+              profile.iframe.src = "/auth/profile";
+              profile.iframe.name="targetframe";
+              profile.iframe.allowTransparency="true";
+              profile.iframe.scrolling="no";
+              profile.iframe.frameborder="0";
+              profile.iframe.style = "border: none;";
+              
+              profile.opened = true;
+              
+              $(profile.div).css({
+                'position': 'fixed',
+                'z-index': 10,
+                'width': '300px',
+                'height': '500px',
+                'top': '60px',
+                'left': '60px',
+                'background-color': 'white',
+              }).addClass('web');
+              $(profile.div).on("mousedown", (e) => {
+                profile.clicked = true;
+              }).on('touchstart', function(e) {
+                profile.clicked = true;
+                let off = $(profile.div).offset();
+                profile.rpos=[e.touches[0].pageX-off.left, e.touches[0].pageY-off.top];
+              }).on("mouseup touchend", (e) => {
+                profile.clicked = false;
+                e.stopPropagation();
+              }).on('mousemove', (e) => {
+                if(profile.opened && profile.clicked) {
+                  let off = $(profile.div).offset()
+                  $(profile.div).offset({
+                    left: off.left + e.originalEvent.movementX,
+                    top: off.top + e.originalEvent.movementY
+                  });
+                }
+              }).bind('touchmove', function(e) {
+                if(profile.opened && profile.clicked) {
+                  $(profile.div).offset({left:  e.touches[0].pageX-profile.rpos[0], top: e.touches[0].pageY-profile.rpos[1]});
+                }
+              });
+              document.body.append(profile.div);
+            });
+            $("body").on("mouseup touchend", (e) => {
+              profile.clicked = false;
+              if(profile.opened) {
+                profile.div.remove();
+              }
+              $(".acc-actions").removeClass('acc-actions-show');
+            })
+          } else {
+            let reg_div = $("#regblock");
+            $.ajax({
+              url: '/auth/regblock.html',
+              method: 'get',
+              success: function(data) {
+                reg_div.html(data);
+              }
+            });
+          }
+        }
+      })
+      
+    </script>
+  </body>
+</html>

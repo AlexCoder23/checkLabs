@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    
+    <title>Profile</title>
+    
+    <style>
+      body {
+        background: url(/static/404.jpg);
+        background-size: cover;
+        background-position: right;
+        color: white;
+        font-family: "Montserrat Alternates", sans-serif;
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        flex-direction: column;
+        margin: 0;
+        
+        font-family: "Montserrat", sans-serif;
+        font-optical-sizing: auto;
+        font-style: normal;
+      }
+      
+      header {
+        width: 100vw;
+        display: flex;
+        justify-content: center;
+      }
+      
+      main {
+        flex-grow: 1;
+        width: 65%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      
+      .glow-on-hover {
+        width: 220px;
+        height: 50px;
+        border: none;
+        outline: none;
+        color: #fff;
+        background: #111;
+        cursor: pointer;
+        position: relative;
+        z-index: 0;
+        border-radius: 10px;
+        font-size: 17px;
+        font-weight: 600;
+      }
+
+      .glow-on-hover:before {
+        content: '';
+        background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+        position: absolute;
+        top: -2px;
+        left:-2px;
+        background-size: 400%;
+        z-index: -1;
+        filter: blur(5px);
+        width: calc(100% + 4px);
+        height: calc(100% + 4px);
+        animation: glowing 20s linear infinite;
+        opacity: 0;
+        transition: opacity .3s ease-in-out;
+        border-radius: 10px;
+      }
+
+      .glow-on-hover:active {
+        color: #000;
+      }
+
+      .glow-on-hover:active:after {
+        background: transparent;
+      }
+
+      .glow-on-hover:hover:before {
+        opacity: 1;
+      }
+
+      .glow-on-hover:after {
+        z-index: -1;
+        content: '';
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: #111;
+        left: 0;
+        top: 0;
+        border-radius: 10px;
+      }
+
+      @keyframes glowing {
+        0% { background-position: 0 0; }
+        50% { background-position: 400% 0; }
+        100% { background-position: 0 0; }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1>404 NOT FOUND</h1>
+    </header>
+    <main>
+      <div>
+      	<h1>О нет! Ты попал в открытый космос.</h1>
+        <h2>Поторопись вернуться домой, у тебя заканчивается кислород: <span id="time">1:00</span>.</h2>
+        <button class="glow-on-hover" onclick="location.href = '/'">Вернуться домой</button>
+      </div>
+    </main>
+  </body>
+  <script>
+    let time = 60;
+    function bnumb(n) {
+      let l = (n+"").length;
+      return "0".repeat(2-l)+n
+    }
+    function update() {
+      $('#time').text(Math.floor(time/60)+":"+bnumb(time%60));
+      if(time <= 0) location.href = '/';
+      time -= 1;
+    }
+    setInterval(update, 1000);
+  </script>
+</html>
