@@ -4,16 +4,16 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+  <link href="/static/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+  <script src="/static/bootstrap.bundle.min.js"crossorigin="anonymous"></script>
+
   <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css">
 
   <script src="https://code.jquery.com/jquery-3.7.1.js"></script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.0/socket.io.js"></script>
   
   <script src="https://cdn.datatables.net/2.1.8/js/dataTables.js"></script>
-  
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
   
   <script src="/static/cookie.js"></script>
   
@@ -494,7 +494,7 @@
       flex-grow: 2;
     }
 
-    #mark-description {
+    .mark-description {
       margin-top: 10px;
       width: 100%;
       height: 170px;
@@ -570,6 +570,25 @@
       </div>
     </div>
     
+    <div class="modal fade" id="mark-neiro-modal" tabindex="-1" aria-labelledby="add-mark" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" style="color: black;">Нейропомощь</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Закрыть"></button>
+          </div>
+          <div class="modal-body">
+            <div class="in-row">
+              <input type="number" maxlength=64 placeholder="Оценка" id="mark-inp3"><br/>
+              <button id="mark-btn">Оценить</button>
+            </div>
+            <textarea placeholder="Коментарий" id="mark-description1" class="mark-description"></textarea><br/>
+            <textarea placeholder="Вердикт" id="teach-verd" class="mark-description"></textarea><br/>
+          </div>
+        </div>
+      </div>
+    </div>
+    
     <main>
       <div id="sidebar">
         <div id="tools">
@@ -624,6 +643,14 @@
         <a id="act-file-rname-btn">Переименовать</a>
         <a id="act-file-download-btn">Скачать</a>
         <a id="delete-file-btn">Удалить</a>
+      </div>
+    </div>
+    
+    <div id="task-actions-cont" class="actions">
+      <p>Действия</p>
+      <div>
+        <a id="act-task-mark-btn">Оценить</a>
+        <a id="act-task-neiro-btn">Нейропомощь</a>
       </div>
     </div>
     
@@ -1050,7 +1077,7 @@ function gfile(task_id, name) {
       let iname = document.createElement("a");
       ename.append(iname);
       let tname = document.createElement("a");
-      tname.innerHTML = name.slice(5);
+      tname.innerHTML = name.;
       ename.append(tname);
       $(iname).html(name.endsWith('.py') ? pythonIcon : name.endsWith('.html') ? htmlIcon : name.endsWith('.css') ? cssIcon : name.endsWith('.js') ? jsIcon : (name.endsWith('.png') || name.endsWith('.jpg') || name.endsWith('.svg') || name.endsWith('.gif')) ? imgIcon : name.endsWith('.json') ? jsonIcon : (name.endsWith('.mp3') || name.endsWith('.wav') || name.endsWith('.ogg') || name.endsWith('.m4a')) ? audioIcon : name.endsWith('.zip') ? zipIcon : (name.endsWith('.mp4') || name.endsWith('.avi')) ? videoIcon : name.endsWith('.txt') ? txtIcon : name.endsWith('.sh') ? bashIcon : otherIcon).css('margin-right', '4px');
       $(ename).click(function() {
@@ -1083,9 +1110,9 @@ function gfile(task_id, name) {
       let epoint = document.createElement("a");
       epoint.textContent = '⋮';
       task_nel.append(epoint);
-      $(epoint).click(function(e) {          
-        $("#mark-modal").modal("show");
-        cur_stud_task = [task_el, task];
+      $(epoint).click(function(e) {  
+        cur_stud_task = [task_el, task.id, task_name, task.stud_id]
+        $("#task-actions-cont").css('display', 'block').offset({ top: e.pageY+10, left: e.pageX+10 });
         preventDefaults(e);
       });
 
@@ -1110,6 +1137,36 @@ function gfile(task_id, name) {
       }
       return task_el;
     }
+    
+    $("#act-task-mark-btn").click((e) => {
+      $("#mark-modal").modal("show");
+      $("#task-actions-cont").css('display', 'none');
+      preventDefaults(e);
+    });
+    
+    $("#act-task-neiro-btn").click((e) => {
+      $("#mark-neiro-modal").modal("show");
+      $("#task-actions-cont").css('display', 'none');
+      $.ajax({
+        url: '/checkLabs/class/neiroth',
+        method: 'post',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        data: JSON.stringify({
+          class_id: class_id,
+          stud_id: cur_stud_task[3],
+          task_id: cur_stud_task[1],
+        }),
+        success: function(neiro_data) {
+          neiro_data = JSON.parse(neiro_data);
+          $("#mark-inp3").val(neiro_data[0]);
+          $("#mark-description1").val(neiro_data[1]);
+          $("#teach-verd").val(neiro_data[2]);
+        }
+      });
+      preventDefaults(e);
+    });
     
     function stud_block(stud, tasks) {
       let el = $(document.createElement("div"));
@@ -1148,7 +1205,8 @@ function gfile(task_id, name) {
                 let task_cont = stud_task_block({
                   name: tasks[i].name,
                   files: tasks[i].files.concat(my_tasks_files_data.tasks[tasks[i].id].files.map((el) => "stud$"+stud.id+"$"+el)),
-                  id: tasks[i].id
+                  id: tasks[i].id,
+                  stud_id: stud.id,
                 });
                 tasks_div.append(task_cont);
               }
