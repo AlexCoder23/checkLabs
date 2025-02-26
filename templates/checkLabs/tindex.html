@@ -8,10 +8,10 @@
     <meta name="doc_name" content="Учитель CheckLabs главная">
     <meta name="topic_name" content="CheckLabs - Учитель">
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-    
+    <link href="/static/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <script src="/static/bootstrap.bundle.min.js"crossorigin="anonymous"></script>
+
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     
     <title>CheckLabs - Учитель</title>
 
@@ -380,6 +380,7 @@
           <p>CheckLabs</p>
         </a>
       </div>
+      <p style="display: flex; align-items: center;">Учитель - Перейти в<a href="/checkLabs" style="margin-left: 6px;">ученика</a></p>
       <div>
         <a id="acc-btn">
           <div class="ava-img-div">
@@ -432,8 +433,8 @@
             method: 'get',
             success: function(data1) {
               if(data1.ok && data1.teacher) {
-                if(data.user[4]) {
-                  $("#avatar").attr('src', data.user[4]);
+                if(data.user.photo_url) {
+                  $("#avatar").attr('src', data.user.photo_url);
                 } else {
                   $("#avatar").remove();
                   $("#ava-ini").text(data1.teacher.firstname[0].toUpperCase()+(data1.teacher.lastname ? data1.teacher.lastname[0].toUpperCase() : ''));
