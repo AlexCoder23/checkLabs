@@ -73,10 +73,20 @@
                 <div class="service">
                   <h3 class="main-article__header">Заказать рекламу</h3>
                   <p>Если вам нужна реклама вашего продукта или компании, можете заказать её здесь.</p>
-                  <a href="https://t.me/alexCoder23" style="color: rgb(157 157 157 / 61%);">Заказать за 0р в месяц...</a>
+                  <a href="https://t.me/alexCoder23" style="color: rgb(157 157 157 / 61%);">Заказать за 2р в месяц...</a>
                 </div>
               </div>
             </div>
+          </article>
+          <article class="main-article">
+            <h2 class="main-article__header header">Информация</h2>
+            <p>Топ донатеров:</p>
+            <ul>
+              <li style='color: red;'>csoftware</li>
+              <li style='color: red;'>Vanya⚽️</li>
+              <li style='color: yellow;'>return NeuroSpace();</li>
+              <li>&lt;~_~&gt;</li>
+            </ul>
           </article>
           <article class="main-article" id="regblock">
           </article>
@@ -112,6 +122,7 @@
     </div>
     
     <script>
+      console.log("%cBe careful,  do not enter code here if you do not know what you are doing. Do not paste any code that a third party/person has suggested to you.", "/*background-image: linear-gradient(to left, violet, lightblue, blue, green, yellow, orange, red);   -webkit-background-clip: text; color: transparent;*/ text-shadow: -1px 1px #ef3550, -2px 2px #f48fb1, -3px 3px #7e57c2, -4px 4px #2196f3, -5px 5px #26c6da, -6px 6px #43a047, -7px 7px #eeff41, -8px 8px #f9a825, -9px 9px #ff5722; color: red; font-size: 2em;")
       const deadline = new Date(2025, 05, 15, 12);
       let disp = $("#nytimer");
       function countdownTimer() {
@@ -128,6 +139,7 @@
         disp.text((days < 10 ? '0' + days : days) + ":" + (hours < 10 ? '0' + hours : hours) + ":" + (minutes < 10 ? '0' + minutes : minutes) + ":" + (seconds < 10 ? '0' + seconds : seconds));
       }
       
+      countdownTimer()
       timerId = setInterval(countdownTimer, 1000);
     
       const avtor = document.querySelector('#gb1');
@@ -149,8 +161,8 @@
           
           if(data.ok && data.user) {
             const avatar = document.createElement('img');
-            avatar.src = data.user[4];
-            $("#gree-nick").text(' '+data.user[2]);
+            avatar.src = data.user.photo_url;
+            $("#gree-nick").text(' '+data.user.first_name);
             $(".acc").append(avatar).on("mousedown touchstart", (e) => {
               $(".acc-actions").addClass('acc-actions-show');
             }).on("mouseup touchend", (e) => {
