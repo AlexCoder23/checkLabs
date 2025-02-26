@@ -1,7 +1,7 @@
 import dotenv
 dotenv.load_dotenv()
 
-import os, datetime, time, sys, json, traceback, html, importlib, glob
+import os, datetime, time, sys, json, traceback, html, importlib, glob, logging
 from collections import defaultdict
 from fastapi import FastAPI, Request, WebSocket, WebSocketDisconnect, APIRouter
 from fastapi.responses import Response, HTMLResponse, JSONResponse, PlainTextResponse, FileResponse
@@ -11,7 +11,9 @@ from fastapi.staticfiles import StaticFiles
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from starlette.middleware.cors import CORSMiddleware
 from starlette.middleware.base import BaseHTTPMiddleware
+from fastapi.middleware.gzip import GZipMiddleware
 import auth
+import asyncpg
 
 
 app = FastAPI()
@@ -26,12 +28,35 @@ class DisableCacheMiddleware(BaseHTTPMiddleware):
         return response
 
 app.add_middleware(DisableCacheMiddleware)
+app.add_middleware(GZipMiddleware)
 
 
 HOST = 'alexcoder23.ru'
 LOGS = []
 routes_path = 'blueprints/'
 routes = {}
+DBS = {
+# ['id', 'user', 'password', 'database', 'host']
+  'core': ['alexcoder23', 'qywter132', 'core', '0.0.0.0'],
+  'checklabs': ['alexcoder23', 'qywter132', 'checklabs', '0.0.0.0'],
+}
+
+logging.basicConfig(level=logging.NOTSET)
+logger = logging.getLogger(__name__)
+
+
+@app.on_event("startup")
+async def startup():
+  for k, v in DBS.items():
+    try:
+      app.state._state['db_'+k] = await asyncpg.create_pool(user=v[0], password=v[1], database=v[2], host=v[3])
+    except: pass
+
+@app.on_event("shutdown")
+async def shutdown():
+  for k, v in DBS.items():
+    await app.state._state['db_'+k].close()
+        
 
 def log(*data):
   print(*data)
@@ -39,6 +64,7 @@ def log(*data):
 
 
 log('loading routes')
+app.state.log = log
 for path in glob.glob(f'{routes_path}*.py'):
   try:
     path = path.replace('\\','/')[:-3]
@@ -47,7 +73,7 @@ for path in glob.glob(f'{routes_path}*.py'):
     mod = importlib.import_module(mod_path)
     router = APIRouter()
     templates = Jinja2Templates(directory=f"templates/{name}")
-    routes[name] = [mod, router, mod.Blueprint(router, templates.TemplateResponse)]
+    routes[name] = [mod, router, mod.Blueprint(router, templates.TemplateResponse, app)]
     app.include_router(router, prefix=('' if name == 'index' else f'/{name}'))
     log('route', name, 'loaded')
   except:
@@ -90,7 +116,8 @@ async def websocket(ws: WebSocket):
   await ws.accept()
   ws_col[ip] += 1
   token = ws.headers.get("sec-websocket-key")
-  user = await auth.check_auth(ws.cookies)
+  async with app.state.db_core.acquire() as conn:
+    user = await auth.check_auth(conn, ws.cookies)
   ws_clients[token] = ws
   ws_users[token] = user
   try:
